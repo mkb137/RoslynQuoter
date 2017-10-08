@@ -1,0 +1,7 @@
+﻿class C
+{
+  void M()
+  {
+    A("M"); // comment
+  }
+}

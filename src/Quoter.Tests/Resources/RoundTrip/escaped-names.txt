@@ -1,0 +1,8 @@
+﻿
+namespace @N
+{
+   public class @A
+   {
+       public @string @P { get; set; }
+   }
+}

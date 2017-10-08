@@ -1,0 +1,13 @@
+﻿/// <!--a-->
+/// <![CDATA[c]]>
+/// <completionlist cref=""a""/>
+/// <exception cref=""a"" />
+/// <include file='a' path='[@name=""b""]'/>
+/// <permission cref=""a"" />
+/// <remarks></remarks>
+/// <see cref=""a""/>
+/// <seealso cref=""a""/>
+/// <summary>a</summary>
+/// <example>a</example>
+/// <param name=""a"">a</param>
+class C { }

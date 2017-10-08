@@ -171,3 +171,8 @@ UpgradeLog*.XML
 UpgradeLog*.htm
 /src/QuoterService/project.lock.json
 /src/QuoterService/Properties/PublishProfiles/roslynquoter - Web Deploy-publish.ps1
+
+# Paket dependency manager
+.paket/paket.bootstrapper.exe
+paket-files/
+

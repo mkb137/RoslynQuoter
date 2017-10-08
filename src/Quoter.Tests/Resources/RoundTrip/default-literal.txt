@@ -1,0 +1,6 @@
+﻿class C
+{
+    void A(int x = default)
+    {
+    }
+}

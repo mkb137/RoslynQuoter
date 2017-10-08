@@ -1,0 +1,4 @@
+﻿    /// <summary xml:lang="ru">
+    /// test
+    /// </summary>
+class C { }
