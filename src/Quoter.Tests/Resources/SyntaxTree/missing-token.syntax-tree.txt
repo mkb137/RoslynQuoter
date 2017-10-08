@@ -1,0 +1,14 @@
+﻿SyntaxFactory.CompilationUnit()
+.WithMembers(
+    SyntaxFactory.SingletonList<MemberDeclarationSyntax>(
+        SyntaxFactory.ClassDeclaration(
+            SyntaxFactory.MissingToken(SyntaxKind.IdentifierToken))
+        .WithKeyword(
+            SyntaxFactory.Token(SyntaxKind.ClassKeyword))
+        .WithOpenBraceToken(
+            SyntaxFactory.MissingToken(SyntaxKind.OpenBraceToken))
+        .WithCloseBraceToken(
+            SyntaxFactory.MissingToken(SyntaxKind.CloseBraceToken))))
+.WithEndOfFileToken(
+    SyntaxFactory.Token(SyntaxKind.EndOfFileToken))
+.NormalizeWhitespace()

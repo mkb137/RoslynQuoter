@@ -1,0 +1,12 @@
+﻿SyntaxFactory.CompilationUnit()
+.WithUsings(
+    SyntaxFactory.SingletonList<UsingDirectiveSyntax>(
+        SyntaxFactory.UsingDirective(
+            SyntaxFactory.IdentifierName("System"))
+        .WithUsingKeyword(
+            SyntaxFactory.Token(SyntaxKind.UsingKeyword))
+        .WithSemicolonToken(
+            SyntaxFactory.Token(SyntaxKind.SemicolonToken))))
+.WithEndOfFileToken(
+    SyntaxFactory.Token(SyntaxKind.EndOfFileToken))
+.NormalizeWhitespace()

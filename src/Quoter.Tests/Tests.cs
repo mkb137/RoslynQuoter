@@ -6,217 +6,15 @@ using Xunit;
 
 public class Tests
 {
-    [Fact]
-    public void TestUsingSystemWithRedundantCalls()
-    {
-        Test(@"using System;
-", @"SyntaxFactory.CompilationUnit()
-.WithUsings(
-    SyntaxFactory.SingletonList<UsingDirectiveSyntax>(
-        SyntaxFactory.UsingDirective(
-            SyntaxFactory.IdentifierName(""System""))
-        .WithUsingKeyword(
-            SyntaxFactory.Token(SyntaxKind.UsingKeyword))
-        .WithSemicolonToken(
-            SyntaxFactory.Token(SyntaxKind.SemicolonToken))))
-.WithEndOfFileToken(
-    SyntaxFactory.Token(SyntaxKind.EndOfFileToken))
-.NormalizeWhitespace()", removeRedundantModifyingCalls: false);
-    }
 
-    [Fact]
-    public void TestUsingSystemWithUsingStatic()
-    {
-        Test(@"using System;
-", @"CompilationUnit()
-.WithUsings(
-    SingletonList<UsingDirectiveSyntax>(
-        UsingDirective(
-            IdentifierName(""System""))))
-.NormalizeWhitespace()", shortenCodeWithUsingStatic: true);
-    }
-
-    [Fact]
-    public void TestUsingSystem()
-    {
-        Test(@"using System;
-", @"SyntaxFactory.CompilationUnit()
-.WithUsings(
-    SyntaxFactory.SingletonList<UsingDirectiveSyntax>(
-        SyntaxFactory.UsingDirective(
-            SyntaxFactory.IdentifierName(""System""))))
-.NormalizeWhitespace()");
-    }
-
-    [Fact]
-    public void TestSimpleClass()
-    {
-        Test("class C { }", @"SyntaxFactory.CompilationUnit()
-.WithMembers(
-    SyntaxFactory.SingletonList<MemberDeclarationSyntax>(
-        SyntaxFactory.ClassDeclaration(""C"")
-        .WithKeyword(
-            SyntaxFactory.Token(SyntaxKind.ClassKeyword))
-        .WithOpenBraceToken(
-            SyntaxFactory.Token(SyntaxKind.OpenBraceToken))
-        .WithCloseBraceToken(
-            SyntaxFactory.Token(SyntaxKind.CloseBraceToken))))
-.WithEndOfFileToken(
-    SyntaxFactory.Token(SyntaxKind.EndOfFileToken))
-.NormalizeWhitespace()", removeRedundantModifyingCalls: false);
-    }
-
-    [Fact]
-    public void TestMissingToken()
-    {
-        Test("class", @"SyntaxFactory.CompilationUnit()
-.WithMembers(
-    SyntaxFactory.SingletonList<MemberDeclarationSyntax>(
-        SyntaxFactory.ClassDeclaration(
-            SyntaxFactory.MissingToken(SyntaxKind.IdentifierToken))
-        .WithKeyword(
-            SyntaxFactory.Token(SyntaxKind.ClassKeyword))
-        .WithOpenBraceToken(
-            SyntaxFactory.MissingToken(SyntaxKind.OpenBraceToken))
-        .WithCloseBraceToken(
-            SyntaxFactory.MissingToken(SyntaxKind.CloseBraceToken))))
-.WithEndOfFileToken(
-    SyntaxFactory.Token(SyntaxKind.EndOfFileToken))
-.NormalizeWhitespace()", removeRedundantModifyingCalls: false);
-    }
-
-    [Fact]
-    public void TestMissingTokenWithUsingStatic()
-    {
-        Test("class", @"CompilationUnit()
-.WithMembers(
-    SingletonList<MemberDeclarationSyntax>(
-        ClassDeclaration(
-            MissingToken(SyntaxKind.IdentifierToken))
-        .WithKeyword(
-            Token(SyntaxKind.ClassKeyword))
-        .WithOpenBraceToken(
-            MissingToken(SyntaxKind.OpenBraceToken))
-        .WithCloseBraceToken(
-            MissingToken(SyntaxKind.CloseBraceToken))))
-.WithEndOfFileToken(
-    Token(SyntaxKind.EndOfFileToken))
-.NormalizeWhitespace()", removeRedundantModifyingCalls: false, shortenCodeWithUsingStatic: true);
-    }
-
-
-    [Fact]
-    public void TestHelloWorld()
-    {
-        Test(@"using System;
-
-namespace N
-{
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            Console.WriteLine(""Hello World""); // comment
-        }
-    }
-}", @"SyntaxFactory.CompilationUnit()
-.WithUsings(
-    SyntaxFactory.SingletonList<UsingDirectiveSyntax>(
-        SyntaxFactory.UsingDirective(
-            SyntaxFactory.IdentifierName(""System""))
-        .WithUsingKeyword(
-            SyntaxFactory.Token(SyntaxKind.UsingKeyword))
-        .WithSemicolonToken(
-            SyntaxFactory.Token(SyntaxKind.SemicolonToken))))
-.WithMembers(
-    SyntaxFactory.SingletonList<MemberDeclarationSyntax>(
-        SyntaxFactory.NamespaceDeclaration(
-            SyntaxFactory.IdentifierName(""N""))
-        .WithNamespaceKeyword(
-            SyntaxFactory.Token(SyntaxKind.NamespaceKeyword))
-        .WithOpenBraceToken(
-            SyntaxFactory.Token(SyntaxKind.OpenBraceToken))
-        .WithMembers(
-            SyntaxFactory.SingletonList<MemberDeclarationSyntax>(
-                SyntaxFactory.ClassDeclaration(""Program"")
-                .WithKeyword(
-                    SyntaxFactory.Token(SyntaxKind.ClassKeyword))
-                .WithOpenBraceToken(
-                    SyntaxFactory.Token(SyntaxKind.OpenBraceToken))
-                .WithMembers(
-                    SyntaxFactory.SingletonList<MemberDeclarationSyntax>(
-                        SyntaxFactory.MethodDeclaration(
-                            SyntaxFactory.PredefinedType(
-                                SyntaxFactory.Token(SyntaxKind.VoidKeyword)),
-                            SyntaxFactory.Identifier(""Main""))
-                        .WithModifiers(
-                            SyntaxFactory.TokenList(
-                                SyntaxFactory.Token(SyntaxKind.StaticKeyword)))
-                        .WithParameterList(
-                            SyntaxFactory.ParameterList(
-                                SyntaxFactory.SingletonSeparatedList<ParameterSyntax>(
-                                    SyntaxFactory.Parameter(
-                                        SyntaxFactory.Identifier(""args""))
-                                    .WithType(
-                                        SyntaxFactory.ArrayType(
-                                            SyntaxFactory.PredefinedType(
-                                                SyntaxFactory.Token(SyntaxKind.StringKeyword)))
-                                        .WithRankSpecifiers(
-                                            SyntaxFactory.SingletonList<ArrayRankSpecifierSyntax>(
-                                                SyntaxFactory.ArrayRankSpecifier(
-                                                    SyntaxFactory.SingletonSeparatedList<ExpressionSyntax>(
-                                                        SyntaxFactory.OmittedArraySizeExpression()
-                                                        .WithOmittedArraySizeExpressionToken(
-                                                            SyntaxFactory.Token(SyntaxKind.OmittedArraySizeExpressionToken))))
-                                                .WithOpenBracketToken(
-                                                    SyntaxFactory.Token(SyntaxKind.OpenBracketToken))
-                                                .WithCloseBracketToken(
-                                                    SyntaxFactory.Token(SyntaxKind.CloseBracketToken)))))))
-                            .WithOpenParenToken(
-                                SyntaxFactory.Token(SyntaxKind.OpenParenToken))
-                            .WithCloseParenToken(
-                                SyntaxFactory.Token(SyntaxKind.CloseParenToken)))
-                        .WithBody(
-                            SyntaxFactory.Block(
-                                SyntaxFactory.SingletonList<StatementSyntax>(
-                                    SyntaxFactory.ExpressionStatement(
-                                        SyntaxFactory.InvocationExpression(
-                                            SyntaxFactory.MemberAccessExpression(
-                                                SyntaxKind.SimpleMemberAccessExpression,
-                                                SyntaxFactory.IdentifierName(""Console""),
-                                                SyntaxFactory.IdentifierName(""WriteLine""))
-                                            .WithOperatorToken(
-                                                SyntaxFactory.Token(SyntaxKind.DotToken)))
-                                        .WithArgumentList(
-                                            SyntaxFactory.ArgumentList(
-                                                SyntaxFactory.SingletonSeparatedList<ArgumentSyntax>(
-                                                    SyntaxFactory.Argument(
-                                                        SyntaxFactory.LiteralExpression(
-                                                            SyntaxKind.StringLiteralExpression,
-                                                            SyntaxFactory.Literal(""Hello World"")))))
-                                            .WithOpenParenToken(
-                                                SyntaxFactory.Token(SyntaxKind.OpenParenToken))
-                                            .WithCloseParenToken(
-                                                SyntaxFactory.Token(SyntaxKind.CloseParenToken))))
-                                    .WithSemicolonToken(
-                                        SyntaxFactory.Token(
-                                            SyntaxFactory.TriviaList(),
-                                            SyntaxKind.SemicolonToken,
-                                            SyntaxFactory.TriviaList(
-                                                SyntaxFactory.Comment(""// comment""))))))
-                            .WithOpenBraceToken(
-                                SyntaxFactory.Token(SyntaxKind.OpenBraceToken))
-                            .WithCloseBraceToken(
-                                SyntaxFactory.Token(SyntaxKind.CloseBraceToken)))))
-                .WithCloseBraceToken(
-                    SyntaxFactory.Token(SyntaxKind.CloseBraceToken))))
-        .WithCloseBraceToken(
-            SyntaxFactory.Token(SyntaxKind.CloseBraceToken))))
-.WithEndOfFileToken(
-    SyntaxFactory.Token(SyntaxKind.EndOfFileToken))
-.NormalizeWhitespace()", removeRedundantModifyingCalls: false);
-    }
-
+	/// <summary>
+	/// Tests that the source text produces the expected syntax tree.
+	/// </summary>
+	/// <param name="sourceText"></param>
+	/// <param name="expected"></param>
+	/// <param name="useDefaultFormatting"></param>
+	/// <param name="removeRedundantModifyingCalls"></param>
+	/// <param name="shortenCodeWithUsingStatic"></param>
     private void Test(
         string sourceText,
         string expected,
@@ -236,12 +34,23 @@ namespace N
         Test(sourceText);
     }
 
+	/// <summary>
+	/// Tests that the source text, when put through the quoter and turned back into code, is unchanged.
+	/// </summary>
+	/// <param name="sourceText"></param>
     private void Test(string sourceText)
     {
         Test(sourceText, useDefaultFormatting: true, removeRedundantCalls: true, shortenCodeWithUsingStatic: false);
         Test(sourceText, useDefaultFormatting: false, removeRedundantCalls: true, shortenCodeWithUsingStatic: true);
     }
 
+	/// <summary>
+	/// Tests that the source text, when put through the quoter and turned back into code, is unchanged.
+	/// </summary>
+	/// <param name="sourceText"></param>
+	/// <param name="useDefaultFormatting"></param>
+	/// <param name="removeRedundantCalls"></param>
+	/// <param name="shortenCodeWithUsingStatic"></param>
     private static void Test(string sourceText, bool useDefaultFormatting, bool removeRedundantCalls, bool shortenCodeWithUsingStatic)
     {
         if (useDefaultFormatting)
@@ -272,17 +81,40 @@ namespace N
         Assert.Equal(sourceText, resultText);
     }
 	
+	/// <summary>
+	/// Performs roundtrip tests on all files in the "RoundTrip" folder.
+	/// </summary>
+	/// <param name="fileName"></param>
 	[Theory]
-	[MemberData( nameof( GetTestFiles ), @"Resources\RoundTrip" ) ]
+	[MemberData( nameof( GetFiles ), @"Resources\RoundTrip" ) ]
 	public void TestRoundtrip( string fileName ) {
 		// Read the file contents
-		using ( var stream = new FileStream( fileName, FileMode.Open, FileAccess.Read ) ) {
-			using ( var reader = new StreamReader( stream ) ) {
-				// Return the contents
-				var sourceText = reader.ReadToEnd();
-				Test( sourceText );
-			}
-		}
+		var sourceText = File.ReadAllText( fileName );
+		Test( sourceText );
+	}
+
+	/// <summary>
+	/// Tests syntax tree generation on all files in the "SyntaxTree" folder.
+	/// 
+	/// </summary>
+	/// <param name="fileName"></param>
+	/// <param name="syntaxFileName"></param>
+	/// <param name="removeRedundantModifyingCalls"></param>
+	/// <param name="shortenCodeWithUsingStatic"></param>
+	[Theory]
+	[MemberData( nameof( GetFilePairs ), @"Resources\SyntaxTree", ".syntax-tree", false, false ) ]
+	[MemberData( nameof( GetFilePairs ), @"Resources\SyntaxTree", ".remove-redundant", true, false ) ]
+	[MemberData( nameof( GetFilePairs ), @"Resources\SyntaxTree", ".using-static", false, true ) ]
+	public void TestSyntaxTree( string fileName, string syntaxFileName, bool removeRedundantModifyingCalls, bool shortenCodeWithUsingStatic ) {
+		// Get the source text and the syntax
+		var sourceText = File.ReadAllText( fileName );
+		var syntaxTree = File.ReadAllText( syntaxFileName );
+		Test( 
+			sourceText, 
+			syntaxTree, 
+			removeRedundantModifyingCalls: removeRedundantModifyingCalls,
+			shortenCodeWithUsingStatic: shortenCodeWithUsingStatic 
+			);
 	}
 
 	/// <summary>
@@ -290,7 +122,7 @@ namespace N
 	/// </summary>
 	/// <param name="directory"></param>
 	/// <returns></returns>
-	public static IEnumerable<object[]> GetTestFiles( string directory ) {
+	public static IEnumerable<object[]> GetFiles( string directory ) {
 		// Get the directory
 		var dirInfo = new DirectoryInfo( directory );
 		if ( !dirInfo.Exists ) throw new DirectoryNotFoundException( directory );
@@ -298,5 +130,43 @@ namespace N
 		foreach ( var fileInfo in dirInfo.GetFiles() ) {
 			var filePath = Path.Combine( directory, fileInfo.Name );
 			yield return new [] { filePath };
-		}}
+		}
 	}
+
+	/// <summary>
+	/// Returns the contents of every file in the given directory.
+	/// </summary>
+	/// <param name="directory"></param>
+	/// <param name="pairedFileSuffix"></param>
+	/// <param name="removeRedundantModifyingCalls"></param>
+	/// <param name="shortenCodeWithUsingStatic"></param>
+	/// <returns></returns>
+	public static IEnumerable<object[]> GetFilePairs( 
+		string directory, 
+		string pairedFileSuffix,
+		bool removeRedundantModifyingCalls,
+		bool shortenCodeWithUsingStatic 
+		) {
+		// Get the directory
+		var dirInfo = new DirectoryInfo( directory );
+		if ( !dirInfo.Exists ) throw new DirectoryNotFoundException( directory );
+		// For each file in the directory...
+		foreach ( var fileInfo in dirInfo.GetFiles() ) {
+			// Get the file name without the extension
+			var fileNameWithoutExtension = Path.GetFileNameWithoutExtension( fileInfo.Name );
+			var extension = Path.GetExtension( fileInfo.Name );
+			// If it's the paired file, skip it.
+			if ( fileNameWithoutExtension.EndsWith( pairedFileSuffix  ) ) continue;
+			// Get the file paths
+			var filePath = Path.Combine( directory, fileInfo.Name );
+			// Get the paired file name
+			var pairedFileName = fileNameWithoutExtension + pairedFileSuffix + extension;
+			// Get the paired file path
+			var pairedFilePath = Path.Combine( directory, pairedFileName );
+			// If it doesn't exist, stop
+			if ( !File.Exists( pairedFilePath ) ) continue;
+			// Return the file, paired file, and settings
+			yield return new object [] { filePath, pairedFilePath, removeRedundantModifyingCalls, shortenCodeWithUsingStatic };
+		}
+	}
+}

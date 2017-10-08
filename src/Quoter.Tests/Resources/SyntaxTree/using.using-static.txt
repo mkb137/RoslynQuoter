@@ -1,0 +1,6 @@
+﻿CompilationUnit()
+.WithUsings(
+    SingletonList<UsingDirectiveSyntax>(
+        UsingDirective(
+            IdentifierName("System"))))
+.NormalizeWhitespace()
