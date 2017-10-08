@@ -119,6 +119,7 @@ public class Tests
 	[MemberData( nameof( GetFilePairs ), @"Resources\SyntaxTree", ".syntax-tree", false, false ) ]
 	[MemberData( nameof( GetFilePairs ), @"Resources\SyntaxTree", ".remove-redundant", true, false ) ]
 	[MemberData( nameof( GetFilePairs ), @"Resources\SyntaxTree", ".using-static", false, true ) ]
+	[MemberData( nameof( GetFilePairs ), @"Resources\SyntaxTree", ".using-static-remove-redundant", true, true ) ]
 	public void TestSyntaxTree( string fileName, string syntaxFileName, bool removeRedundantModifyingCalls, bool shortenCodeWithUsingStatic ) {
 		if ( _log.IsDebugEnabled ) _log.DebugFormat( "TestSyntaxTree - fileName = '{0}', syntaxFileName = '{1}'", fileName, syntaxFileName );
 		// Get the source text and the syntax

@@ -170,7 +170,7 @@
     <None Update="Resources\SyntaxTree\using.remove-redundant.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Resources\SyntaxTree\using.using-static.txt">
+    <None Update="Resources\SyntaxTree\using.using-static-remove-redundant.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Resources\SyntaxTree\using.syntax-tree.txt">
