@@ -1,4 +1,5 @@
 source https://www.nuget.org/api/v2/
+nuget log4net
 nuget Microsoft.CodeAnalysis.CSharp.Scripting 
 nuget xunit
 nuget xunit.runner.visualstudio

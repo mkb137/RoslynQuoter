@@ -1,11 +1,24 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
+using log4net;
+using log4net.Config;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Xunit;
 
 public class Tests
 {
+	/// <summary>
+	/// The logger.
+	/// </summary>
+	// ReSharper disable once UnusedMember.Local
+	private readonly static ILog    _log    = LogManager.GetLogger( typeof( Tests ) );
+
+	public Tests() {
+		// Configure logging
+		XmlConfigurator.Configure( new FileInfo( "log4net.config" ) );
+	}
 
 	/// <summary>
 	/// Tests that the source text produces the expected syntax tree.
@@ -88,6 +101,7 @@ public class Tests
 	[Theory]
 	[MemberData( nameof( GetFiles ), @"Resources\RoundTrip" ) ]
 	public void TestRoundtrip( string fileName ) {
+		if ( _log.IsDebugEnabled ) _log.DebugFormat( "TestRoundtrip - fileName = '{0}'", fileName );
 		// Read the file contents
 		var sourceText = File.ReadAllText( fileName );
 		Test( sourceText );
@@ -106,6 +120,7 @@ public class Tests
 	[MemberData( nameof( GetFilePairs ), @"Resources\SyntaxTree", ".remove-redundant", true, false ) ]
 	[MemberData( nameof( GetFilePairs ), @"Resources\SyntaxTree", ".using-static", false, true ) ]
 	public void TestSyntaxTree( string fileName, string syntaxFileName, bool removeRedundantModifyingCalls, bool shortenCodeWithUsingStatic ) {
+		if ( _log.IsDebugEnabled ) _log.DebugFormat( "TestSyntaxTree - fileName = '{0}', syntaxFileName = '{1}'", fileName, syntaxFileName );
 		// Get the source text and the syntax
 		var sourceText = File.ReadAllText( fileName );
 		var syntaxTree = File.ReadAllText( syntaxFileName );

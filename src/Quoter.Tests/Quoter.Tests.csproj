@@ -8,6 +8,9 @@
     <ProjectReference Include="..\Quoter\Quoter.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <None Update="log4net.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Resources\RoundTrip\copyright.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

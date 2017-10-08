@@ -1,3 +1,4 @@
+log4net
 Microsoft.CodeAnalysis.CSharp.Scripting
 xunit
 xunit.runner.visualstudio
